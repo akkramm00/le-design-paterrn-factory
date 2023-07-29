@@ -10,7 +10,7 @@
 
 abstract class Notification
   {
-    protected abstract function(string $message);// tout type de notification doit implémenter une methode send()
+    protected abstract function send(string $message);// tout type de notification doit implémenter une methode send()
     public function managerNotification($message)
     {
       $this -> doStuff();
@@ -22,7 +22,41 @@ abstract class Notification
       // on pourrait logger des informations
     }
   }
+  class EmailNotification extends Notification
+    {
+      public $recipient;
+      public $subject;
+      public function __construct()
+      {
+    $this-> recipient = "contact@societe.com";
+    $this->subject = 'Etat applicatif';
+      }
 
+// La méthode sebd dans ce cas envoie un e-mail
+     protected function send(string $message)
+       {
+         echo sprintf('On envoie le mail ayant pour contenu "%s" au contact              "%s" avec pour sujet : %s<br>' , $message, $this-> recipient, $this-> subject);
+       }
+    }
+class SlackNotification extends Notification
+  {
+    public $channel;
+    public function __construct()
+    {
+  $this->channel = "#applicationState";
+    }
+public function doStuff()
+  {
+    parent::doStuff();
+    //do something else
+  }
+// ici on poste le message sur le canal
+protected function send(string $message)
+  {
+    echo sprintf('On notifie le canal %s du message : %s <br>',
+                $this->channel, $message);
+  }
+  }
 ?> 
 
 
