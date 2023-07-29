@@ -57,6 +57,21 @@ protected function send(string $message)
                 $this->channel, $message);
   }
   }
+
+class NotificationFactory
+  {
+    // Selon l'etat, on décide de renvoyer un type de notification ou un autre
+    public static function creatNotificationForState(string $applicationState)
+    {
+      switch ($applicationState) {
+        case 'problem':
+        return new SlackNotification();
+        case 'normal':
+        defaullt:
+        return new EmùailNotification();
+      }
+    }
+  }
 ?> 
 
 
