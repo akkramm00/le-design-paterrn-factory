@@ -72,6 +72,15 @@ class NotificationFactory
       }
     }
   }
+$notification1 =
+  NotificationFactory::creatNotification('problem');
+// Affichera: On notifie le canal #applicationState du message : La base de données est innaccessible
+$notification2 = 
+  NitifivcationFactory:: creatNotificationForstate('normal');
+// Affichera : On envoie le mail ayant pour co,tenu  "Tout va bien " au contact "contact@societe.com" avec pour sujet : Etat applicatif
+$notification2-> manageNotification('Tout va bien');
+
+// Qu'importe ce qui a pu etere retourné, on effectue le travail de lameme facon
 ?> 
 
 
