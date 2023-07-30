@@ -81,8 +81,95 @@ $notification2 =
 $notification2-> manageNotification('Tout va bien');
 
 // Qu'importe ce qui a pu etere retourné, on effectue le travail de lameme facon
-?> 
 
 
+//=============================================================================
+//                            APPLIQUER LA NOTION
+?>
+<p>
+Créons trois classes représentant les animaux suivnts : Cat / Dog / Horse.
+Ces classes implémenternt l'interface suivante afin de retourner le nom du cri de chaque animal.
+</p>
+  <?php
+interface AnimalInterface
+  {
+    public function getSoundType(): string;
+  }
+?>
+<p>
+  Mettons en place une classe supplémentaire AnimalFactory implémentant le pattern Factory et permettant d'instancier et de retourner, pour un type d'animal donné, l'objet correspondant grace a une méthode load.
+  si l'on essaie d'instancier un type d'animal n'ayant pas été défini, une erreur sera déclencher et sera correctement interpréée.
+  Voici les types d'animaux que nous vérifons:
+</p>
+
+  <?php
+
+$animalTypes = ['horse', 'dog', 'mice', 'cat', 'lion'];
+
+// SOLUTION:
+interface AnimaleInterface
+  {
+    public function getSoundType():string;
+  }
+// Class Dog
+class Dog implements AnimalInterface
+  {
+    public function getSoundType():string
+     {
+     return 'Aboiment';
+     }                            
+  }
+// Class Cat 
+class Cat implements AnimalInterface
+  {
+    public function getSoundType():string
+    {
+      return 'Miaulement';
+    }
+  }
+// Class Horse:
+class Horse implements AnimalInterface
+  {
+    public function getSoundType(): string
+    {
+      return 'Hennissement';
+    }
+  }
+
+//  Class AnimalFactory
+class AnimalFactory
+  {
+    // @param string $animalType
+    //@return AnimalInterface
+    //@throws Exception
+
+    public static function load(string $animalType): AnimalInterface
+    {
+      switch ($animalType) {
+        case 'dog':
+        return new Dog();
+        break;
+        case 'cat':
+        return new Cat();
+        break;
+        case 'horse':
+        return new Horse();
+        break;
+        default:
+        throw new Exception();
+        break;
+      }
+    }
+  }
+$animalTypes = ['horse', 'dog', 'mice', 'cat', 'lion'];
+foreach( $animalTypes as $animalType) {
+  try{
+    $animal = AnimalFactory::load($animalType);
+    echo sprintf("%s : %s <br>" , $animalType, $animal-> getSoundType());
+  }catch(Exception $e) {
+    echo sprintf("%s : animal n'a pas été implémenté dans le système <br>", $animalType);
+  }
+}
+?>
   </body>
 </html>
